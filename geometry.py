@@ -35,8 +35,12 @@ roads_ownership = {}
 for road in roads:
     roads_ownership[road] = 'NoPlayer'
 
+
+
+
 # Playerクラスを定義
-# owned_nodes：　所有しているノードのリスト
+# owned_resources: 所有している資源
+# owned_nodes：　所有しているノードのリスト（道カウントされるノード：道の途中で家を建てる場合は含まない）
 # owned_roads：　所有している道のリスト
 # owned_houses：　所有している家のリスト
 # owned_towns：　所有している街のリスト
@@ -45,10 +49,12 @@ for road in roads:
 # has_longest_road：　道賞判定
 # dispatched_most_knights：　騎士賞判定
 # score：　スコア
+owned_resources = {'wood':0,'soil':0,'grain':0,'sheep':0,'iron':0}
 class Player(object):
-    def __init__(self, owned_nodes = [], owned_roads = [], owned_houses = [], owned_towns=[], owned_cards=[] \
+    def __init__(self, owned_resources = owned_resources, owned_nodes = [], owned_roads = [], owned_houses = [], owned_towns=[], owned_cards=[] \
              ,longest_road=0, has_longest_road=False, dispatched_most_knights=False,score=0):
         self.owned_nodes = owned_nodes
+        self.owned_resources =  owned_resources
         self.owned_roads = owned_roads
         self.owned_houses = owned_houses
         self.owned_towns = owned_towns
@@ -67,16 +73,49 @@ class Player(object):
     #player_name：　道を新たに作成したプレイヤーに合わせて 'Player_{i}' (i=1,2,3,4)とする
     def set_road(self, road, player_name):
         global roads_ownership
-        for i, node in enumerate(road):
-            if node in self.owned_nodes:
-                if roads_ownership[road] == 'NoPlayer':
-                    if nodes_ownership[road[(i+1)%2]-1].player == 'NoPlayer':
-                        self.owned_nodes.append(road[(i+1)%2])
+        #まず資源があるかを確かめる
+        if (self.owned_resources['wood'] >= 1) and (self.owned_resources['soil'] >= 1):
+            #そもそも道がおけるノードかどうかを確かめる
+            for i, node in enumerate(road):
+                if node in self.owned_nodes:
+                    #その道がすでに占有されていないことを確かめる
+                    if roads_ownership[road] == 'NoPlayer':
+                        #資源の消費
+                        self.owned_resources['wood'] -= 1
+                        self.owned_resources['soil'] -= 1
+                        #owned_roadsに道の所有権を更新
                         self.owned_roads.append(roads)
                         roads_ownership[road] = player_name
+                        #もしも道の向こう側に何も建造物が立っていない場合、owned_nodesにそのノードを追加する
+                        if nodes_ownership[road[(i+1)%2]-1].player == 'NoPlayer':
+                            self.owned_nodes.append(road[(i+1)%2])
+
 
     def set_house(self, house_node, player_name):
-        pass
+        global nodes_ownership
+        #まず資源があるかどうかを確かめる
+        if (self.owned_resources['wood'] >= 1) and (self.owned_resources['soil'] >= 1) and (self.owned_resources['grain'] >= 1) and (self.owned_resources['sheep'] >= 1):
+            #次に家を置こうとしているノードが占有されていないことを確かめる
+            if house_node in self.owned_nodes:
+                if nodes_ownership[house_node -1].player == 'NoPlayer':
+                    #家を置こうとしている隣接のノードが占有されていないならばcounterが隣接ノードの数と同じになる。
+                    counter = 0
+                    for next_node in nodes_ownership[house_node -1].next_nodes:
+                        if nodes_ownership[next_node -1].player == 'NoPlayer':
+                            counter += 1
+                    #もし隣接ノードに全て家がなかったら家を建てることができる
+                    if len(nodes_ownership[house_node -1].next_nodes) == counter:
+                        #資源（木1 土1 麦1 羊1）を消費
+                        self.owned_resources['wood'] -= 1
+                        self.owned_resources['soil'] -= 1
+                        self.owned_resources['grain'] -= 1
+                        self.owned_resources['sheep'] -= 1
+                        #nodes_ownershipの所有権を書き換え
+                        nodes_ownership[house_node -1].building == 'House'
+                        nodes_ownership[house_node -1].player == player_name
+                        #TODO:家を他のプレイヤーの道の途中に置いた場合、そのプレイヤーのowned_nodesからそのノードを消去する機能
+
+
     def set_town(self):
         pass
     def get_card(self):
