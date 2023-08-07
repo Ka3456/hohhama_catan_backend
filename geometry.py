@@ -1,3 +1,4 @@
+import random
 #道を全部書き出す　（始点,終点） （始点 < 終点）
 roads = [(i,i+1) for i in range(1,54)]+[(j,3*j+7) for j in range(1,6)]+[(8+3*k,27+5*k) for k in range(0,6)]+[(9+3*l,30+5*l) for l in range(0,5)]
 
@@ -36,7 +37,8 @@ for road in roads:
     roads_ownership[road] = 'NoPlayer'
 
 
-
+#カード一覧
+cards = ['guard']*8 + ['road_building']*2 + ['discovery']*2 + ['monopoly']*2 + ['score']*2
 
 # Playerクラスを定義
 # owned_resources: 所有している資源
@@ -51,8 +53,9 @@ for road in roads:
 # score：　スコア
 #TODO: 街とか家とか道の作成できる限界を設定
 owned_resources = {'wood':0,'soil':0,'grain':0,'sheep':0,'iron':0}
+owned_cards = {}
 class Player(object):
-    def __init__(self, owned_resources = owned_resources, owned_nodes = [], owned_roads = [], owned_houses = [], owned_towns=[], owned_cards=[] \
+    def __init__(self, owned_resources = owned_resources, owned_nodes = [], owned_roads = [], owned_houses = [], owned_towns=[], owned_cards=owned_cards \
              ,longest_road=0, has_longest_road=False, dispatched_most_knights=False,score=0):
         self.owned_nodes = owned_nodes
         self.owned_resources =  owned_resources
@@ -139,10 +142,18 @@ class Player(object):
                 self.owned_towns.append(town_node)
                 #nodes_ownershipの所有権を書き換え
                 nodes_ownership[town_node -1].building == 'Town'
+ 
+    def get_card(self,player_name):
+        global cards
+        #資源があるかどうかを確かめる
+        if (self.owned_resources['grain'] >= 2) and (self.owned_resources['sheep'] >= 1) and (self.owned_resources['steel'] >= 1):
+            #cards（カードの資源）がゼロでないことを確認
+            if len(cards) > 0:
+                random_number = random.randrange(len(cards))
+                card = cards.pop(random_number)
 
 
-    def get_card(self):
-        pass
+
     #最長の道を計算
     def calculate_longest_roads(self):
         pass
