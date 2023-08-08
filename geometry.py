@@ -171,6 +171,7 @@ class Player(object):
                 self.owned_towns.append(town_node)
                 #nodes_ownershipの所有権を書き換え
                 nodes_ownership[town_node -1].building == 'Town'
+        return
 
     #新たにカードを引く関数  
     def get_card(self):
@@ -183,17 +184,9 @@ class Player(object):
                 random_number = random.randrange(len(cards))
                 card = cards.pop(random_number)
                 self.owned_cards[card] += 1
-
-
-
-    #最長の道を計算
-    def calculate_longest_roads(self):
-        #TODO: この関数の実装　：効率悪いけどとりあえず端のノードで深さ優先探索をする(?)
-        pass
-
-    # ある始点から最長長さを算出するアルゴリズム
-    # starting_nodeからの最長経路長を求める
-    def _longest_search(self, starting_node):
+        return
+    
+    def longest_search(self, starting_node):
         #初めは始点を考える
         pathes = [[starting_node]]
         #カウンターで経路深さを計算
@@ -202,9 +195,12 @@ class Player(object):
             path_len = len(pathes)
             for road in self.owned_roads:
                 for path in pathes:
-                    #もしループがある場合はスキップ
+                    #もし既にループがある場合はスキップ
                     if path[-1] in path[:-1]:
                         continue
+                    #
+                    if path[-1] in self.obstacles:
+                        break
                     for i in range(2):
                         if road[i] == path[-1]:
                                 #次のノードの候補
@@ -212,15 +208,30 @@ class Player(object):
                                 #これが来た道でない場合はノードを追加
                                 if path[-2] != nextnode_candidate:
                                     path_copied = path.copy().append(nextnode_candidate)
-                                    pathes.append(path_copied)
-                
-            pathes = pathes[path_len:]
+                                    pathes.append(path_copied)       
             counter += 1
-            if pathes == []:
+            #もし1イテレーションでノードが追加されなくなったらループから脱却
+            if len(pathes) == path_len:
                 break
         
         return counter
 
+
+
+    #最長の道を計算
+    def calculate_longest_roads(self):
+        longest_path_candidate = 0
+        for node in self.owned_nodes:
+            path_length = self.longest_search(node)
+            if path_length > longest_path_candidate:
+                longest_path_candidate = path_length
+        self.longest_road = path_length
+
+        return
+
+    # ある始点から最長長さを算出するアルゴリズム
+    # starting_nodeからの最長経路長を求める
+    
 
             
 
