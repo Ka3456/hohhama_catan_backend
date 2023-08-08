@@ -37,7 +37,13 @@ for road in roads:
     roads_ownership[road] = 'NoPlayer'
 
 
-#カード一覧
+# カード一覧
+# guard: 騎士
+# road_building: 街道
+# discovery: 収穫
+# monoploy: 独占
+# score: 得点
+# カードの枚数の内訳は適当
 cards = ['guard']*8 + ['road_building']*2 + ['discovery']*2 + ['monopoly']*2 + ['score']*2
 
 # Playerクラスを定義
@@ -52,8 +58,8 @@ cards = ['guard']*8 + ['road_building']*2 + ['discovery']*2 + ['monopoly']*2 + [
 # dispatched_most_knights：　騎士賞判定
 # score：　スコア
 #TODO: 街とか家とか道の作成できる限界を設定
-owned_resources = {'wood':0,'soil':0,'grain':0,'sheep':0,'iron':0}
-owned_cards = {}
+owned_resources = {'wood':0,'soil':0,'grain':0,'sheep':0,'steel':0}
+owned_cards = {'guard':0,'road_building':0,'discovery':0,'monopoly':0,'score':0}
 class Player(object):
     def __init__(self, owned_resources = owned_resources, owned_nodes = [], owned_roads = [], owned_houses = [], owned_towns=[], owned_cards=owned_cards \
              ,longest_road=0, has_longest_road=False, dispatched_most_knights=False,score=0):
@@ -62,14 +68,32 @@ class Player(object):
         self.owned_roads = owned_roads
         self.owned_houses = owned_houses
         self.owned_towns = owned_towns
-        self.cards = owned_cards
+        self.owned_cards = owned_cards
         self.longest_road = longest_road
         self.has_longest_road = has_longest_road
         self.dispatched_most_knights = dispatched_most_knights
         self.score = score
 
-    def set_initial_nodes(self):
-        pass
+    #最初に新たな家をセットする関数 input: house_node (int), player_name (str)
+    #nodes_ownershipとself.owned_nodesを結果に応じて更新
+    #house_node：　新たに作る家のノード
+    #player_name：　家を新たに作成したプレイヤーに合わせて 'Player_{i}' (i=1,2,3,4)とする
+    def set_initial_nodes(self, house_node, player_name):
+        global nodes_ownership
+        #家を置こうとしているノードが占有されていないことを確かめる
+        if nodes_ownership[house_node -1].player == 'NoPlayer':
+            #家を置こうとしている隣接のノードが占有されていないならばcounterが隣接ノードの数と同じになる。
+            counter = 0
+            for next_node in nodes_ownership[house_node -1].next_nodes:
+                if nodes_ownership[next_node -1].player == 'NoPlayer':
+                    counter += 1
+            #もし隣接ノードに全て家がなかったら家を建てることができる
+            if len(nodes_ownership[house_node -1].next_nodes) == counter:
+                #owned_housesに追加
+                self.owned_houses.append(house_node)
+                #nodes_ownershipの所有権を書き換え
+                nodes_ownership[house_node -1].building == 'House'
+                nodes_ownership[house_node -1].player == player_name
     
     #新たな道をセットする関数 input: road (tuple), player_name (str)
     #roads_ownershipを結果に応じて更新
@@ -142,15 +166,18 @@ class Player(object):
                 self.owned_towns.append(town_node)
                 #nodes_ownershipの所有権を書き換え
                 nodes_ownership[town_node -1].building == 'Town'
- 
-    def get_card(self,player_name):
+
+    #新たにカードを引く関数  
+    def get_card(self):
         global cards
         #資源があるかどうかを確かめる
         if (self.owned_resources['grain'] >= 2) and (self.owned_resources['sheep'] >= 1) and (self.owned_resources['steel'] >= 1):
             #cards（カードの資源）がゼロでないことを確認
             if len(cards) > 0:
+                #card(カードの資源)からランダムに1枚取り出し
                 random_number = random.randrange(len(cards))
                 card = cards.pop(random_number)
+                self.owned_cards[card] += 1
 
 
 
