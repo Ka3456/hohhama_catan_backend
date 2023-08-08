@@ -2,6 +2,16 @@ import random
 #道を全部書き出す　（始点,終点） （始点 < 終点）
 roads = [(i,i+1) for i in range(1,54)]+[(j,3*j+7) for j in range(1,6)]+[(8+3*k,27+5*k) for k in range(0,6)]+[(9+3*l,30+5*l) for l in range(0,5)]
 
+# カード一覧
+# guard: 騎士
+# road_building: 街道
+# discovery: 収穫
+# monoploy: 独占
+# score: 得点
+# カードの枚数の内訳は適当
+cards = ['guard']*8 + ['road_building']*2 + ['discovery']*2 + ['monopoly']*2 + ['score']*2
+shared_resources_among_players =  {'wood':0,'soil':0,'grain':0,'sheep':0,'steel':0}
+
 
 #Nodeのクラスを作成
 #next_roads: そのノードに隣接している道
@@ -37,14 +47,7 @@ for road in roads:
     roads_ownership[road] = 'NoPlayer'
 
 
-# カード一覧
-# guard: 騎士
-# road_building: 街道
-# discovery: 収穫
-# monoploy: 独占
-# score: 得点
-# カードの枚数の内訳は適当
-cards = ['guard']*8 + ['road_building']*2 + ['discovery']*2 + ['monopoly']*2 + ['score']*2
+
 
 # Playerクラスを定義
 # owned_resources: 所有している資源
@@ -183,6 +186,7 @@ class Player(object):
 
     #最長の道を計算
     def calculate_longest_roads(self):
+        #TODO: この関数の実装　：効率悪いけどとりあえず端のノードで深さ優先探索をする(?)
         pass
 
 player1 = Player()
