@@ -56,6 +56,7 @@ for road in roads:
 # owned_houses：　所有している家のリスト
 # owned_towns：　所有している街のリスト
 # owned_cards：　所有しているカードのリスト
+# obstacles: ブロックされているノードのリスト
 # longest_road：　最長の道の長さ
 # has_longest_road：　道賞判定
 # dispatched_most_knights：　騎士賞判定
@@ -65,13 +66,14 @@ owned_resources = {'wood':0,'soil':0,'grain':0,'sheep':0,'steel':0}
 owned_cards = {'guard':0,'road_building':0,'discovery':0,'monopoly':0,'score':0}
 class Player(object):
     def __init__(self, owned_resources = owned_resources, owned_nodes = [], owned_roads = [], owned_houses = [], owned_towns=[], owned_cards=owned_cards \
-             ,longest_road=0, has_longest_road=False, dispatched_most_knights=False,score=0):
+             ,obstacles = [],longest_road=0, has_longest_road=False, dispatched_most_knights=False,score=0):
         self.owned_nodes = owned_nodes
         self.owned_resources =  owned_resources
         self.owned_roads = owned_roads
         self.owned_houses = owned_houses
         self.owned_towns = owned_towns
         self.owned_cards = owned_cards
+        self.obstacles = obstacles
         self.longest_road = longest_road
         self.has_longest_road = has_longest_road
         self.dispatched_most_knights = dispatched_most_knights
@@ -188,6 +190,42 @@ class Player(object):
     def calculate_longest_roads(self):
         #TODO: この関数の実装　：効率悪いけどとりあえず端のノードで深さ優先探索をする(?)
         pass
+
+    # ある始点から最長長さを算出するアルゴリズム
+    # starting_nodeからの最長経路長を求める
+    def _longest_search(self, starting_node):
+        #初めは始点を考える
+        pathes = [[starting_node]]
+        #カウンターで経路深さを計算
+        counter = 1
+        while True:
+            path_len = len(pathes)
+            for road in self.owned_roads:
+                for path in pathes:
+                    #もしループがある場合はスキップ
+                    if path[-1] in path[:-1]:
+                        continue
+                    for i in range(2):
+                        if road[i] == path[-1]:
+                                #次のノードの候補
+                                nextnode_candidate = road[(i+1)%2]
+                                #これが来た道でない場合はノードを追加
+                                if path[-2] != nextnode_candidate:
+                                    path_copied = path.copy().append(nextnode_candidate)
+                                    pathes.append(path_copied)
+                
+            pathes = pathes[path_len:]
+            counter += 1
+            if pathes == []:
+                break
+        
+        return counter
+
+
+            
+
+        
+
 
 player1 = Player()
 
