@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ゲームテーブル</title>
+    <!-- BootstrapのCSSを読み込む -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* カスタムスタイルが必要な場合はここに追加 */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        /* 資源の色を設定 */
+        .wood {
+            background-color: #4CAF50; /* 緑っぽい色 */
+        }
+        .wheat {
+            background-color: #FFD700; /* 黄色っぽい色 */
+        }
+        .sheep {
+            background-color: #ADFF2F; /* 黄緑っぽい色 */
+        }
+        .brick {
+            background-color: #DAA520; /* 黄土色 */
+        }
+        .iron {
+            background-color: silver;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="mb-4">ゲームテーブル</h1>
+        <div class="row">
+            <div class="col-md-12">
+                <!-- テーブルを包むコンテナ -->
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th rowspan="2">プレイヤー1</th>
+                            <th rowspan="2">点数</th>
+                            <th colspan="5">資源</th>
+                            <th colspan="5">発展カード</th>
+                            <th rowspan="2">家</th>
+                            <th rowspan="2">街</th>
+                            <th rowspan="2">街道</th>
+                        </tr>
+                        <tr>
+                            <th class="wood">木</th>
+                            <th class="wheat">麦</th>
+                            <th class="sheep">羊</th>
+                            <th class="brick">土</th>
+                            <th class="iron">鉄</th>
+                            <th>騎士</th>
+                            <th>独占</th>
+                            <th>収穫</th>
+                            <th>街道</th>
+                            <th>得点</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- プレイヤー情報 -->
+                        <tr>
+                            <td>k</td>
+                            <td>50</td>
+                            <td class="wood">5</td>
+                            <td class="wheat">4</td>
+                            <td class="sheep">3</td>
+                            <td class="brick">6</td>
+                            <td class="iron">2</td>
+                            <td>3</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>4</td>
+                            <td>5</td>
+                            <td>3</td>
+                            <td>5</td>
+                            <td>2</td>
+                        </tr>
+                        <!-- 他のプレイヤー情報も同様に追加 -->
+                    </tbody>
+                    <thead>
+                        <tr>
+                            <th rowspan="2">プレイヤー2</th>
+                            <th rowspan="2">点数</th>
+                            <th colspan="5">資源</th>
+                            <th colspan="5">発展カード</th>
+                            <th rowspan="2">家</th>
+                            <th rowspan="2">街</th>
+                            <th rowspan="2">街道</th>
+                        </tr>
+                        <tr>
+                            <th class="wood">木</th>
+                            <th class="wheat">麦</th>
+                            <th class="sheep">羊</th>
+                            <th class="brick">土</th>
+                            <th class="iron">鉄</th>
+                            <th>騎士</th>
+                            <th>独占</th>
+                            <th>収穫</th>
+                            <th>街道</th>
+                            <th>得点</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- プレイヤー情報 -->
+                        <tr>
+                            <td>mmm</td>
+                            <td>50</td>
+                            <td class="wood">5</td>
+                            <td class="wheat">4</td>
+                            <td class="sheep">3</td>
+                            <td class="brick">6</td>
+                            <td class="iron">2</td>
+                            <td>3</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>4</td>
+                            <td>5</td>
+                            <td>3</td>
+                            <td>5</td>
+                            <td>2</td>
+                        </tr>
+                        <!-- 他のプレイヤー情報も同様に追加 -->
+                    </tbody>
+                    <thead>
+                        <tr>
+                            <th rowspan="2">プレイヤー3</th>
+                            <th rowspan="2">点数</th>
+                            <th colspan="5">資源</th>
+                            <th colspan="5">発展カード</th>
+                            <th rowspan="2">家</th>
+                            <th rowspan="2">街</th>
+                            <th rowspan="2">街道</th>
+                        </tr>
+                        <tr>
+                            <th class="wood">木</th>
+                            <th class="wheat">麦</th>
+                            <th class="sheep">羊</th>
+                            <th class="brick">土</th>
+                            <th class="iron">鉄</th>
+                            <th>騎士</th>
+                            <th>独占</th>
+                            <th>収穫</th>
+                            <th>街道</th>
+                            <th>得点</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- プレイヤー情報 -->
+                        <tr>
+                            <td>mouse</td>
+                            <td>50</td>
+                            <td class="wood">5</td>
+                            <td class="wheat">4</td>
+                            <td class="sheep">3</td>
+                            <td class="brick">6</td>
+                            <td class="iron">2</td>
+                            <td>3</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>4</td>
+                            <td>5</td>
+                            <td>3</td>
+                            <td>5</td>
+                            <td>2</td>
+                        </tr>
+                        <!-- 他のプレイヤー情報も同様に追加 -->
+                    </tbody>
+                    <thead>
+                        <tr>
+                            <th rowspan="2">プレイヤー4</th>
+                            <th rowspan="2">点数</th>
+                            <th colspan="5">資源</th>
+                            <th colspan="5">発展カード</th>
+                            <th rowspan="2">家</th>
+                            <th rowspan="2">街</th>
+                            <th rowspan="2">街道</th>
+                        </tr>
+                        <tr>
+                            <th class="wood">木</th>
+                            <th class="wheat">麦</th>
+                            <th class="sheep">羊</th>
+                            <th class="brick">土</th>
+                            <th class="iron">鉄</th>
+                            <th>騎士</th>
+                            <th>独占</th>
+                            <th>収穫</th>
+                            <th>街道</th>
+                            <th>得点</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- プレイヤー情報 -->
+                        <tr>
+                            <td>kyoi</td>
+                            <td>50</td>
+                            <td class="wood">5</td>
+                            <td class="wheat">4</td>
+                            <td class="sheep">3</td>
+                            <td class="brick">6</td>
+                            <td class="iron">2</td>
+                            <td>3</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>4</td>
+                            <td>5</td>
+                            <td>3</td>
+                            <td>5</td>
+                            <td>2</td>
+                        </tr>
+                        <!-- 他のプレイヤー情報も同様に追加 -->
+                    </tbody>
+             
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- BootstrapのJSとPopper.jsを読み込む -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css">
+    <title>Login</title>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Login</h1>
+        <form action="/login" method="post">
+            <label for="username">ユーザー名:</label>
+            <input type="text" id="username" name="username">
+            
+            <label for="password">パスワード:</label>
+            <input type="password" id="password" name="password">
+            
+            <input class="elevated-button" type="button" value="Login" onclick="location.href='/index'">
+
+            <div class="participants">
+                <h2>参加者</h2>
+                <ul>
+                    <li>そうま</li>
+                    <li>みちと</li>
+                    <li>森　</li>
+                    <li>肉じゃがの宮下</li>
+                    
+                </ul>
+            </div>
+
+
+
+            
+        </form>
+    </div>
+</body>
+</html>
