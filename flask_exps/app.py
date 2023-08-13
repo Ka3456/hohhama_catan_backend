@@ -6,20 +6,138 @@ app = Flask(__name__, static_folder='./static')
 app.secret_key = b'random string...'
 
 
+
+
 #データベース（仮）
+
+#ログイン情報
+login_inf=[]
+
+
+#マップのデータ
 land_indices = [2, 3, 1, 0, 5, 2, 3, 1, 0, 5, 2, 3, 1, 0, 5, 2, 3, 1, 0]  # 初期の land_indices
 photo_indices = [0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 1, 0]  # 要調整
 
 
+#個人の資源管理
+
+player1 = [
+    ("Score", 7),
+    ("Wood", 5),
+    ("Wheat", 4),
+    ("Sheep", 3),
+    ("Brick", 6),
+    ("Iron", 2),
+    ("Knights_Owned", 3),
+    ("Knights_Used", 1),
+    ("Monopoly_Cards", 2),
+    ("Monopoly_Cards_Used", 4),
+    ("Harvest_Cards", 5),
+    ("Harvest_Cards_Used", 3),
+    ("Roads_Owned", 5),
+    ("Roads_Built", 2),
+    ("Victory_Points", 4),
+    ("Houses_Owned", 5),
+    ("Houses_Available", 3),
+    ("Cities_Owned", 5),
+    ("Cities_Available", 2),
+    ("Roads_Owned", 4),
+    ("Roads_Available", 3)
+]
+player2 = [
+    ("Score", 7),
+    ("Wood", 5),
+    ("Wheat", 4),
+    ("Sheep", 3),
+    ("Brick", 6),
+    ("Iron", 2),
+    ("Knights_Owned", 3),
+    ("Knights_Used", 1),
+    ("Monopoly_Cards", 2),
+    ("Monopoly_Cards_Used", 4),
+    ("Harvest_Cards", 5),
+    ("Harvest_Cards_Used", 3),
+    ("Roads_Owned", 5),
+    ("Roads_Built", 2),
+    ("Victory_Points", 4),
+    ("Houses_Owned", 5),
+    ("Houses_Available", 3),
+    ("Cities_Owned", 5),
+    ("Cities_Available", 2),
+    ("Roads_Owned", 4),
+    ("Roads_Available", 3)
+]
+player3 = [
+    ("Score", 7),
+    ("Wood", 5),
+    ("Wheat", 4),
+    ("Sheep", 3),
+    ("Brick", 6),
+    ("Iron", 2),
+    ("Knights_Owned", 3),
+    ("Knights_Used", 1),
+    ("Monopoly_Cards", 2),
+    ("Monopoly_Cards_Used", 4),
+    ("Harvest_Cards", 5),
+    ("Harvest_Cards_Used", 3),
+    ("Roads_Owned", 5),
+    ("Roads_Built", 2),
+    ("Victory_Points", 4),
+    ("Houses_Owned", 5),
+    ("Houses_Available", 3),
+    ("Cities_Owned", 5),
+    ("Cities_Available", 2),
+    ("Roads_Owned", 4),
+    ("Roads_Available", 3)
+]
+player4 = [
+    ("Score", 7),
+    ("Wood", 5),
+    ("Wheat", 4),
+    ("Sheep", 3),
+    ("Brick", 6),
+    ("Iron", 2),
+    ("Knights_Owned", 3),
+    ("Knights_Used", 1),
+    ("Monopoly_Cards", 2),
+    ("Monopoly_Cards_Used", 4),
+    ("Harvest_Cards", 5),
+    ("Harvest_Cards_Used", 3),
+    ("Roads_Owned", 5),
+    ("Roads_Built", 2),
+    ("Victory_Points", 4),
+    ("Houses_Owned", 5),
+    ("Houses_Available", 3),
+    ("Cities_Owned", 5),
+    ("Cities_Available", 2),
+    ("Roads_Owned", 4),
+    ("Roads_Available", 3)
+]
+
+
+
+
+
+#ここからがアプリのコード
+
+
+
 
 @app.route('/', methods=['GET'])
-def hello():
+def login():
     return render_template('login.html')
 
 
 
 @app.route('/index', methods=['GET'])
 def index():
+
+    #プレイヤーのデータを取得
+    global player1
+    global player2
+    global player3
+    global player4
+
     # 画像のパス
     map_path = './templates/images/map.png'
     land_path = './templates/images/land.png'
@@ -82,7 +200,7 @@ def index():
     composite_path = './static/composite.png'
     cv2.imwrite(composite_path, map_img)
 
-    return render_template('index.html', composite_path=composite_path)
+    return render_template('index.html', composite_path=composite_path, player1=player1, player2=player2, player3=player3, player4=player4 )    
 
 
 # 新しいルートを追加

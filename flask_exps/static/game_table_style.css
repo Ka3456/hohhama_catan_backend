@@ -1,0 +1,46 @@
+/* 以前のカスタムスタイル */
+
+/* より見やすいテーブルデザイン */
+.table {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1rem;
+    background-color: transparent;
+    border: 5px solid #d6b46c; /* 枠線を太くして額縁のようなイメージに */
+}
+
+.table th,
+.table td {
+    padding: 0.75rem;
+    vertical-align: middle; /* 数字をセルの中央に揃える */
+    border-top: 1px solid #dee2e6;
+    font-family: 'Cursive', cursive; /* おしゃれなフォントに変更 */
+    font-size: 1.1rem; /* フォントサイズを調整 */
+    color: #333; /* 文字色を設定 */
+    text-align: center; /* セル内のテキストを中央寄せ */
+}
+
+.table thead th {
+    vertical-align: middle;
+    border-bottom: 2px solid #dee2e6;
+    font-size: 1.25rem; /* テーブルヘッダの文字サイズを大きくする */
+}
+
+.table tbody + tbody {
+    border-top: 2px solid #dee2e6;
+}
+
+/* プレイヤー情報を強調する背景色 */
+.table tbody tr:first-child {
+    background-color: #f3d9a7;
+}
+
+
+/* 得点の列のスタイルを上書き */
+
+.table td:nth-child(2) {
+    font-size: 2rem; /* 大きな文字サイズに変更 */
+    font-family: 'Impact', sans-serif; /* 別のフォントに変更 */
+    color: #d9534f; /* 得点の列の文字色を変更 */
+}
